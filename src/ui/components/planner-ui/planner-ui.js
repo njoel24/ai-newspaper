@@ -34,12 +34,14 @@ export class PlannerUI extends HTMLElement {
       try {
         const res = await fetch('/api/agents/planner');
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error);
+        if (!res.ok) {
+          output.textContent = data?.error || 'Unexpected error occurred.';
+          return;
+        }
+        output.textContent = JSON.stringify(data, null, 2);
       } catch (err) {
-        output.textContent = 'Unexpected error occurred.';
-        return;
+        output.textContent = err?.message || 'Unexpected error occurred.';
       }
-      output.textContent = JSON.stringify(data, null, 2);
     });
   }
 }

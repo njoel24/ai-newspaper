@@ -1,6 +1,7 @@
 import { runPlannerAgent } from './plannerAgent.js';
 import { runWriterAgent } from './writerAgent.js';
 import { runEvaluatorAgent } from './evaluatorAgent.js';
+import { runTrendAgent } from './trendAgent.js';
 
 export async function runOrchestratorAgent() {
   const summary = {
@@ -10,6 +11,10 @@ export async function runOrchestratorAgent() {
   };
 
   try {
+    console.log('🚀 Orchestrator: Ensuring trends are available (Trend Agent)...');
+    const trends = await runTrendAgent();
+    console.log(`Found ${trends.length} trends.`);
+
     console.log('🚀 Orchestrator: Running Planner Agent...');
     const plannerResult = await runPlannerAgent();
     summary.planner.success = true;
