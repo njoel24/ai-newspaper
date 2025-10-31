@@ -1,0 +1,46 @@
+// Prisma schema for AI Newspaper system
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Trend {
+  id        String   @id @default(uuid())
+  topic     String
+  score     Float
+  source    String?
+  timestamp DateTime  @default(now())
+}
+
+model Plan {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  topics      Json
+  rawResponse String?
+  source      String?
+}
+
+model Article {
+  id        String   @id @default(uuid())
+  topic     String
+  title     String
+  summary   String
+  body      String
+  author    String
+  createdAt DateTime @default(now())
+  planId    String?
+}
+
+model Analytics {
+  id        String   @id @default(uuid())
+  articleId String
+  views     Int
+  likes     Int
+  rating    Float
+  timestamp DateTime @default(now())
+}
