@@ -7,8 +7,10 @@
     "dev": "vite",
     "dev:server": "node src/server.js",
     "dev:full": "concurrently \"npm run dev:server\" \"npm run dev\"",
-  "format": "prettier --write \"src/**/*.{js,ts,json,md,css,html}\" \"*.md\"",
-  "format:check": "prettier --check \"src/**/*.{js,ts,json,md,css,html}\" \"*.md\"",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "format": "prettier --write \"src/**/*.{js,ts,json,md,css,html}\" \"*.md\"",
+    "format:check": "prettier --check \"src/**/*.{js,ts,json,md,css,html}\" \"*.md\"",
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio"
   },
@@ -21,8 +23,13 @@
   "devDependencies": {
     "concurrently": "^9.2.1",
     "express": "^5.1.0",
+    "jsdom": "^27.1.0",
     "prettier": "^3.6.2",
     "prisma": "^6.0.0",
-    "vite": "^7.1.12"
+    "vite": "^7.1.12",
+    "vitest": "^4.0.6"
+  },
+  "vitest": {
+    "environment": "jsdom"
   }
 }

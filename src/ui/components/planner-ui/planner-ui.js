@@ -46,4 +46,7 @@ export class PlannerUI extends HTMLElement {
   }
 }
 
-customElements.define('planner-ui', PlannerUI);
+// Only define the custom element when running in a browser-like environment
+if (typeof customElements !== 'undefined') {
+  customElements.define('planner-ui', PlannerUI);
+}
