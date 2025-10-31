@@ -1,4 +1,4 @@
-import "dotenv/config";
-import { runOrchestratorAgent } from "./agents/orchestratorAgent.js";
+import 'dotenv/config';
+import { runOrchestratorAgent } from './agents/orchestratorAgent.js';
 
 await runOrchestratorAgent();

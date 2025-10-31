@@ -1,27 +1,27 @@
-import { getLatestPlan, saveArticle } from "../data/db.js";
-import { runPrompt } from "../llm/index.js";
-import path from "path";
-import { fileURLToPath } from "url";
+import { getLatestPlan, saveArticle } from '../data/db.js';
+import { runPrompt } from '../llm/index.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export async function runWriterAgent() {
-  console.log("📝 WriterAgent: fetching latest plan...");
+  console.log('📝 WriterAgent: fetching latest plan...');
   const latestPlan = await getLatestPlan();
 
   if (!latestPlan) {
-    console.log("⚠️ No plan found. Exiting.");
+    console.log('⚠️ No plan found. Exiting.');
     return;
   }
 
   const topics = latestPlan.topics?.trends || [];
 
   if (!topics.length) {
-    console.log("⚠️ No topics in the latest plan. Exiting.");
+    console.log('⚠️ No topics in the latest plan. Exiting.');
     return;
   }
 
-  const promptFile = path.join(__dirname, "../../llm/writer-prompt.md");
+  const promptFile = path.join(__dirname, '../../llm/writer-prompt.md');
 
   const results = [];
 
@@ -31,7 +31,7 @@ export async function runWriterAgent() {
 
       const llmResponse = await runPrompt(promptFile, {
         topic: t.topic,
-        angle: t.angle || "",
+        angle: t.angle || '',
       });
 
       // Parse LLM JSON response
@@ -39,7 +39,7 @@ export async function runWriterAgent() {
       try {
         articleJson = JSON.parse(llmResponse);
       } catch (err) {
-        console.error("❌ Failed to parse LLM output:", llmResponse);
+        console.error('❌ Failed to parse LLM output:', llmResponse);
         results.push({ success: false, error: `Invalid JSON for topic: ${t.topic}` });
         continue;
       }
@@ -57,13 +57,13 @@ export async function runWriterAgent() {
         summary: articleJson.summary,
         body: articleJson.body,
         planId: latestPlan.id,
-        author: "AI Writer",
+        author: 'AI Writer',
       });
 
       console.log(`✅ Article saved: ${articleJson.title}`);
       results.push({ success: true, topic: t.topic, title: articleJson.title });
     } catch (err) {
-      console.error("❌ Error generating article:", err);
+      console.error('❌ Error generating article:', err);
       results.push({ success: false, error: err.message });
     }
   }

@@ -1,11 +1,11 @@
-import { getArticles, saveAnalytics } from "../data/db.js";
+import { getArticles, saveAnalytics } from '../data/db.js';
 
 export async function runEvaluatorAgent() {
-  console.log("📊 EvaluatorAgent: fetching latest articles...");
+  console.log('📊 EvaluatorAgent: fetching latest articles...');
   const articles = await getArticles(10); // fetch last 10 articles
 
   if (!articles.length) {
-    console.log("⚠️ No articles found. Exiting.");
+    console.log('⚠️ No articles found. Exiting.');
     return;
   }
 
@@ -30,7 +30,7 @@ export async function runEvaluatorAgent() {
 
       console.log(`✅ Analytics saved for article: ${article.title}`);
     } catch (err) {
-      console.error("❌ Error saving analytics:", err);
+      console.error('❌ Error saving analytics:', err);
     }
   }
 
