@@ -5,7 +5,7 @@ vi.mock('../../src/data/db.js', () => ({
   saveAnalytics: vi.fn().mockResolvedValue(true),
 }));
 
-import { runEvaluatorAgent } from '../../src/agents/evaluatorAgent.js';
+import { runEvaluatorAgent } from '../../src/agents/evaluatorAgent.ts';
 import { getArticles, saveAnalytics } from '../../src/data/db.js';
 
 describe('evaluatorAgent', () => {

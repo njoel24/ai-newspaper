@@ -58,7 +58,7 @@ vi.mock('@prisma/client', () => {
   return { PrismaClient };
 });
 
-import * as db from '../../src/data/db.js';
+import * as db from '../../src/data/db.ts';
 
 describe('data/db', () => {
   it('saves and retrieves trends', async () => {

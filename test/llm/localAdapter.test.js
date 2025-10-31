@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import path from 'path';
-import { runPrompt } from '../../src/llm/localAdapter.js';
+import { runPrompt } from '../../src/llm/localAdapter.ts';
 
 describe('localAdapter', () => {
   it('returns 3 planner suggestions as JSON array', async () => {

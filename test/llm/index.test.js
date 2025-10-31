@@ -4,7 +4,7 @@ import path from 'path';
 // Ensure local adapter is used
 process.env.USE_LOCAL_LLM = 'true';
 
-import { runPrompt } from '../../src/llm/index.js';
+import { runPrompt } from '../../src/llm/index.ts';
 
 describe('llm/index runPrompt (local)', () => {
   it('invokes local adapter for planner prompt', async () => {

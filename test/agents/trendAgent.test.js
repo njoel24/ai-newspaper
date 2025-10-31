@@ -11,7 +11,7 @@ vi.mock('../../src/data/db.js', () => {
   };
 });
 
-import { runTrendAgent } from '../../src/agents/trendAgent.js';
+import { runTrendAgent } from '../../src/agents/trendAgent.ts';
 import { getTrends, saveTrends } from '../../src/data/db.js';
 
 describe('trendAgent', () => {

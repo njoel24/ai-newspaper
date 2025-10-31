@@ -4,11 +4,11 @@ import { describe, it, expect } from 'vitest';
 global.HTMLElement = global.HTMLElement || class {};
 global.customElements = global.customElements || { define: () => {}, get: () => undefined };
 
-import('../../src/ui/components/planner-ui/planner-ui.js');
+import('../../src/ui/components/planner-ui/planner-ui.ts');
 
 describe('planner-ui web component', () => {
   it('module imports without throwing and exports PlannerUI class', async () => {
-    const mod = await import('../../src/ui/components/planner-ui/planner-ui.js');
+  const mod = await import('../../src/ui/components/planner-ui/planner-ui.ts');
     expect(mod).toBeTruthy();
     expect(mod.PlannerUI).toBeDefined();
   });

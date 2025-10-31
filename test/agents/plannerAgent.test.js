@@ -12,7 +12,7 @@ vi.mock('../../src/llm/index.js', () => ({
   runPrompt: vi.fn().mockResolvedValue(JSON.stringify([{ title: 'T', summary: 'S', topic: 'AI' }])),
 }));
 
-import { runPlannerAgent } from '../../src/agents/plannerAgent.js';
+import { runPlannerAgent } from '../../src/agents/plannerAgent.ts';
 import { getTrends, savePlan } from '../../src/data/db.js';
 import { runPrompt } from '../../src/llm/index.js';
 

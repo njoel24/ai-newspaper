@@ -9,7 +9,7 @@ vi.mock('../../src/llm/index.js', () => ({
   runPrompt: vi.fn().mockResolvedValue(JSON.stringify({ title: 'Title', summary: 'Sum', body: 'Body' })),
 }));
 
-import { runWriterAgent } from '../../src/agents/writerAgent.js';
+import { runWriterAgent } from '../../src/agents/writerAgent.ts';
 import { getLatestPlan, saveArticle } from '../../src/data/db.js';
 import { runPrompt } from '../../src/llm/index.js';
 

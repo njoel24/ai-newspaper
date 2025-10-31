@@ -10,4 +10,11 @@ Make it pluggable , so other people can add
 Mrmc mode
 Add nginix and express and security context
 infra as code
+typescript and ESM everywhere
 Hugging Face inference, llama.cpp, or a LangChain pipeline
+ephimeral env
+use puppettee or playwright
+Github actions
+
+During earlier runs we hit jsdom/parse5 ESM issues due to the environment and Node version. To avoid that, the test config uses the Node environment (in vitest.config.js) so tests run reliably. If you want full DOM testing (jsdom) later, upgrade Node to >=20.19.0 (or >=22.12.0) and switch environment to jsdom.
+package.json was updated by npm to reflect installed devDependency versions.

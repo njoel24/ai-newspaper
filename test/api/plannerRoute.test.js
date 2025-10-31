@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import plannerRoute from '../../src/api/agents/planner.js';
+import plannerRoute from '../../src/api/agents/planner.ts';
 
 describe('planner route', () => {
   it('exports an express router', () => {
