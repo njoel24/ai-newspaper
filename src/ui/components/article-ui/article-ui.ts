@@ -242,7 +242,8 @@ export class ArticleUI extends HTMLElement {
     const modalTitle = this.shadowRoot!.querySelector('#modalTitle') as HTMLElement;
     const modalBody = this.shadowRoot!.querySelector('#modalBody') as HTMLElement;
     modalTitle.textContent = article.title || 'Untitled';
-    modalBody.textContent = article.body || '';
+    const bodyText = (article.body || '').replace(/\\n/g, '\n');
+    modalBody.textContent = bodyText;
   }
 
   private openModal() {

@@ -30,10 +30,39 @@ export async function runWriterAgent() {
   const normalizeJson = (text: string) => {
     let cleaned = text.trim();
     cleaned = cleaned.replace(/```[a-z]*\n?/gi, '').replace(/```/g, '').trim();
+    cleaned = cleaned.replace(/"body"\s*:\s*\{([\s\S]*?)\}\s*([},])/g, (_match, inner, tail) => {
+      const bodyText = String(inner).trim();
+      return `"body": ${JSON.stringify(bodyText)}${tail}`;
+    });
+    cleaned = cleaned.replace(/"body"\s*:\s*"""([\s\S]*?)"""/g, (_match, body) => {
+      return `"body": ${JSON.stringify(body)}`;
+    });
+    cleaned = cleaned.replace(/"body"\s*:\s*"([\s\S]*?)"\s*([},])/g, (_match, body, tail) => {
+      return `"body": ${JSON.stringify(body)}${tail}`;
+    });
     cleaned = cleaned.replace(/"body"\s*:\s*`([\s\S]*?)`/g, (_match, body) => {
       return `"body": ${JSON.stringify(body)}`;
     });
     return cleaned;
+  };
+
+  const parseLooseJson = (text: string) => {
+    const normalized = normalizeJson(text);
+    const titleMatch = normalized.match(/"title"\s*:\s*"([\s\S]*?)"/);
+    const summaryMatch = normalized.match(/"summary"\s*:\s*"([\s\S]*?)"/);
+    const bodyKeyMatch = normalized.match(/"body"\s*:\s*"/);
+    if (!titleMatch || !summaryMatch || !bodyKeyMatch) return null;
+
+    const bodyStart = (bodyKeyMatch.index ?? 0) + bodyKeyMatch[0].length;
+    const bodyEnd = normalized.lastIndexOf('"');
+    if (bodyEnd <= bodyStart) return null;
+
+    const body = normalized.slice(bodyStart, bodyEnd);
+    return {
+      title: titleMatch[1].trim(),
+      summary: summaryMatch[1].trim(),
+      body: body.trim(),
+    };
   };
 
   const extractJson = (text: string) => {
@@ -59,15 +88,23 @@ export async function runWriterAgent() {
         try {
           articleJson = extractJson(llmResponse);
         } catch (extractErr) {
-          console.error('❌ Failed to parse LLM output:', llmResponse);
-          results.push({ success: false, error: `Invalid JSON for topic: ${t.topic}` });
-          continue;
+          const looseParsed = parseLooseJson(llmResponse);
+          if (!looseParsed) {
+            console.error('❌ Failed to parse LLM output:', llmResponse);
+            results.push({ success: false, error: `Invalid JSON for topic: ${t.topic}` });
+            continue;
+          }
+          articleJson = looseParsed;
         }
       }
 
       if (!articleJson.title || !articleJson.summary || !articleJson.body) {
         results.push({ success: false, error: `Missing fields for topic: ${t.topic}` });
         continue;
+      }
+
+      if (typeof articleJson.body !== 'string') {
+        articleJson.body = JSON.stringify(articleJson.body, null, 2);
       }
 
       await saveArticle({
