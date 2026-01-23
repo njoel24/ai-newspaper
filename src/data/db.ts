@@ -20,6 +20,10 @@ export async function saveTrends(trendsArray: Array<any>) {
   return prisma.trend.createMany({ data });
 }
 
+export async function clearTrends() {
+  return prisma.trend.deleteMany({});
+}
+
 export async function savePlan(planData: any) {
   return prisma.plan.create({
     data: {
@@ -58,6 +62,10 @@ export async function getArticles(limit = 10) {
   });
 }
 
+export async function clearArticles() {
+  return prisma.article.deleteMany({});
+}
+
 export async function saveAnalytics(record: any) {
   return prisma.analytics.create({
     data: {
@@ -68,6 +76,10 @@ export async function saveAnalytics(record: any) {
       rating: record.rating,
     },
   });
+}
+
+export async function clearAnalytics() {
+  return prisma.analytics.deleteMany({});
 }
 
 export async function getAnalyticsSummary() {

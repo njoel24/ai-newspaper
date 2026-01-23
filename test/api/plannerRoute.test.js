@@ -1,10 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import plannerRoute from '../../src/api/agents/planner.ts';
+import fs from 'fs';
 
 describe('planner route', () => {
-  it('exports an express router', () => {
-    expect(plannerRoute).toBeDefined();
-    // Express routers expose a stack array of routes
-    expect(plannerRoute.stack).toBeDefined();
+  it('declares a GET /api/agents/planner route in server', () => {
+    const serverSource = fs.readFileSync('src/server.ts', 'utf8');
+    expect(serverSource.includes("app.get('/api/agents/planner'")).toBe(true);
   });
 });

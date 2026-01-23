@@ -1,9 +1,15 @@
-integrate in azure
-using azure function
-run in a container like hdoku
-use your own llm and langchain and hugging
+use rag
+use mcp server
+do fine tuning and publish the model
+use stencil for web compoennts
+use mdule federation for the microsfrnt end at run tim
+extract shared deps
+configure so I can easily switch model
+huggingface and langchain
+run in hodoku
+using azure function and webhook
+
 create a vector databaase and sudolang
-create a webcomponent in the UI
 Canvas and gum road
 Ramalama ond oci conrtainer
 Make it pluggable , so other people can add
@@ -15,6 +21,7 @@ Hugging Face inference, llama.cpp, or a LangChain pipeline
 ephimeral env
 use puppettee or playwright
 Github actions
+carbon.js
 
 During earlier runs we hit jsdom/parse5 ESM issues due to the environment and Node version. To avoid that, the test config uses the Node environment (in vitest.config.js) so tests run reliably. If you want full DOM testing (jsdom) later, upgrade Node to >=20.19.0 (or >=22.12.0) and switch environment to jsdom.
 package.json was updated by npm to reflect installed devDependency versions.

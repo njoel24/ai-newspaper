@@ -16,9 +16,9 @@ export async function runOrchestratorAgent() {
     console.log(`Found ${trends.length} trends.`);
 
     console.log('🚀 Orchestrator: Running Planner Agent...');
-    const plannerResult = await runPlannerAgent();
+    const plannerResult = await runPlannerAgent(trends);
     summary.planner.success = true;
-  summary.planner.topicsPlanned = (plannerResult as any)?.length || 0;
+    summary.planner.topicsPlanned = (plannerResult as any)?.length || 0;
   } catch (err) {
     console.error('❌ Planner Agent failed:', err);
   }

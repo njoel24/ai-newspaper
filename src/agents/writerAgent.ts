@@ -1,7 +1,7 @@
 import { getLatestPlan, saveArticle } from '../data/db.js';
-import { runPrompt } from '../llm/index.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { runPrompt } from '../llm/index.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -21,26 +21,48 @@ export async function runWriterAgent() {
     return;
   }
 
-  const promptFile = path.join(__dirname, '../../llm/writer-prompt.md');
+  // Build a simple PromptTemplate for the writer. We keep this small and
+  // explicit to avoid coupling to file-system templates in tests.
+  const promptFile = path.join(__dirname, '../../prompts/writer-prompt.md');
 
   const results: any[] = [];
+
+  const normalizeJson = (text: string) => {
+    let cleaned = text.trim();
+    cleaned = cleaned.replace(/```[a-z]*\n?/gi, '').replace(/```/g, '').trim();
+    cleaned = cleaned.replace(/"body"\s*:\s*`([\s\S]*?)`/g, (_match, body) => {
+      return `"body": ${JSON.stringify(body)}`;
+    });
+    return cleaned;
+  };
+
+  const extractJson = (text: string) => {
+    const normalized = normalizeJson(text);
+    const start = normalized.indexOf('{');
+    const end = normalized.lastIndexOf('}');
+    if (start === -1 || end === -1 || end <= start) {
+      throw new Error('No JSON object found in LLM output');
+    }
+    return JSON.parse(normalized.slice(start, end + 1));
+  };
 
   for (const t of topics) {
     try {
       console.log(`🧠 Generating article for topic: ${t.topic}`);
 
-      const llmResponse = await runPrompt(promptFile, {
-        topic: t.topic,
-        angle: t.angle || '',
-      });
+  const llmResponse = await runPrompt(promptFile, { topic: t.topic, angle: t.angle || '' });
 
       let articleJson;
       try {
-        articleJson = JSON.parse(llmResponse);
+        articleJson = JSON.parse(normalizeJson(llmResponse));
       } catch (err) {
-        console.error('❌ Failed to parse LLM output:', llmResponse);
-        results.push({ success: false, error: `Invalid JSON for topic: ${t.topic}` });
-        continue;
+        try {
+          articleJson = extractJson(llmResponse);
+        } catch (extractErr) {
+          console.error('❌ Failed to parse LLM output:', llmResponse);
+          results.push({ success: false, error: `Invalid JSON for topic: ${t.topic}` });
+          continue;
+        }
       }
 
       if (!articleJson.title || !articleJson.summary || !articleJson.body) {

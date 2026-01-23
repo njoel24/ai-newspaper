@@ -43,7 +43,7 @@ Copy code
 ## 3. Responsibilities
 
 - Provide a **generic `invoke(model, promptTemplate, variables)`** interface.
-- Load and render **prompt templates** dynamically from `/specs/llm-layer.md` or `/src/llm/prompts/`.
+- Load and render **prompt templates** dynamically from `/prompts/`.
 - Support both **chat** and **completion** style APIs.
 - Automatically **parse JSON outputs** when applicable.
 - Handle **rate limiting, retries, and logging**.

@@ -11,6 +11,16 @@ vi.mock('../../src/data/db.js', () => {
   };
 });
 
+vi.mock('../../src/llm/index.js', () => ({
+  runPrompt: vi.fn().mockResolvedValue(
+    JSON.stringify([
+      { topic: 'AI Music Tools', score: 0.92 },
+      { topic: 'Climate Protests', score: 0.85 },
+      { topic: 'Electric Cars', score: 0.81 },
+    ]),
+  ),
+}));
+
 import { runTrendAgent } from '../../src/agents/trendAgent.ts';
 import { getTrends, saveTrends } from '../../src/data/db.js';
 

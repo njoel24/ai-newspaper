@@ -10,6 +10,6 @@ describe('main and server files', () => {
   });
 
   it('server sets up express routes', () => {
-    expect(server).toMatch(/app.use\(/);
+    expect(server).toMatch(/app.get\('/);
   });
 });
