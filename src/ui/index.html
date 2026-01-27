@@ -64,9 +64,19 @@
       <evaluator-ui></evaluator-ui>
     </section>
 
-    <script type="module" src="./components/trend-ui/trend-ui.js"></script>
-    <script type="module" src="./components/article-ui/article-ui.js"></script>
-    <script type="module" src="./components/evaluator-ui/evaluator-ui.js"></script>
+    <script type="module" src="./components/trend-ui/trend-ui.ts"></script>
+    <script type="module" src="./components/evaluator-ui/evaluator-ui.ts"></script>
+    <script type="module">
+      const stencilEsm = document.createElement('script');
+      stencilEsm.type = 'module';
+      stencilEsm.src = '/components/article-ui/stencil/ai-newspaper.esm.js';
+      document.head.appendChild(stencilEsm);
+
+      const stencilLegacy = document.createElement('script');
+      stencilLegacy.noModule = true;
+      stencilLegacy.src = '/components/article-ui/stencil/ai-newspaper.js';
+      document.head.appendChild(stencilLegacy);
+    </script>
     <script type="module">
       const button = document.getElementById('runOrchestrator');
       const status = document.getElementById('runStatus');

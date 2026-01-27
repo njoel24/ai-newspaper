@@ -4,7 +4,9 @@ import path from "path";
 export default defineConfig({
   root: "src/ui",
   build: {
-    outDir: "../../dist",
+    outDir: "../../dist/ui",
+    emptyOutDir: false,
+    sourcemap: true,
     rollupOptions: {
       input: path.resolve(__dirname, "src/ui/index.html"),
     },

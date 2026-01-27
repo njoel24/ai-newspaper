@@ -1,8 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 
+const LLM_PROVIDER = process.env.LLM_PROVIDER || 'ollama';
 const OLLAMA_HOST = process.env.OLLAMA_HOST || 'http://localhost:11434';
 const OLLAMA_MODEL = process.env.OLLAMA_MODEL || 'llama3.1';
+const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 
 export async function runPrompt(promptFile: string, variables: Record<string, unknown> = {}): Promise<string> {
   const resolved = path.isAbsolute(promptFile) ? promptFile : path.join(process.cwd(), promptFile);
@@ -14,7 +16,23 @@ export async function runPrompt(promptFile: string, variables: Record<string, un
     }
 
     const startedAt = Date.now();
-    console.log(`[LLM] Request -> model=${OLLAMA_MODEL} promptChars=${prompt.length}`);
+    console.log(`[LLM] Request -> provider=${LLM_PROVIDER} promptChars=${prompt.length}`);
+
+    if (LLM_PROVIDER === 'openai') {
+      if (!process.env.OPENAI_API_KEY) {
+        throw new Error('OPENAI_API_KEY is not set');
+      }
+      const OpenAI = (await import('openai')).default;
+      const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+      const response = await client.chat.completions.create({
+        model: OPENAI_MODEL,
+        messages: [{ role: 'user', content: prompt }],
+      });
+      const durationMs = Date.now() - startedAt;
+      const content = response.choices?.[0]?.message?.content || '';
+      console.log(`[LLM] Response <- provider=openai chars=${content.length} (${durationMs}ms)`);
+      return content;
+    }
 
     const res = await fetch(`${OLLAMA_HOST}/api/generate`, {
       method: 'POST',
@@ -33,10 +51,17 @@ export async function runPrompt(promptFile: string, variables: Record<string, un
     }
 
     const durationMs = Date.now() - startedAt;
-    console.log(`[LLM] Response <- chars=${data.response.length} (${durationMs}ms)`);
+    console.log(`[LLM] Response <- provider=ollama chars=${data.response.length} (${durationMs}ms)`);
     return data.response;
   } catch (err: any) {
-    console.error('LLM adapter error:', err?.message || err);
-    throw { status: 500, message: 'Error in LLM adapter.' };
+    const status = err?.status || err?.response?.status || 500;
+    const message = err?.error?.message || err?.message || 'Error in LLM adapter.';
+    console.error('LLM adapter error:', {
+      status,
+      message,
+      code: err?.code,
+      type: err?.type,
+    });
+    throw { status, message };
   }
 }
