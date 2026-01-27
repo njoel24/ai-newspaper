@@ -1,116 +1,12 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="UTF-8" />
     <title>🗞 AI Newspaper Dashboard</title>
-    <style>
-      :root {
-        color-scheme: light;
-        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      }
-      body {
-        margin: 0;
-        padding: 24px;
-        background: #f6f7fb;
-        color: #1f2937;
-      }
-      header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 20px;
-      }
-      h1 {
-        font-size: 24px;
-        margin: 0;
-      }
-      .run-btn {
-        background: #111827;
-        color: #fff;
-        border: none;
-        padding: 10px 16px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 600;
-      }
-      .status {
-        margin-left: 12px;
-        font-size: 14px;
-        color: #6b7280;
-      }
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 16px;
-      }
-      @media (max-width: 1024px) {
-        .grid {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
-    <header>
-      <h1>🧠 AI Newspaper Dashboard</h1>
-      <div>
-        <button class="run-btn" id="runOrchestrator">Run Orchestrator</button>
-        <span class="status" id="runStatus">Idle</span>
-      </div>
-    </header>
-
-    <section class="grid">
-      <trend-ui></trend-ui>
-      <article-ui></article-ui>
-      <evaluator-ui></evaluator-ui>
-    </section>
-
-    <script type="module" src="./components/trend-ui/trend-ui.ts"></script>
-    <script type="module" src="./components/evaluator-ui/evaluator-ui.ts"></script>
-    <script type="module">
-      const stencilEsm = document.createElement('script');
-      stencilEsm.type = 'module';
-      stencilEsm.src = '/components/article-ui/stencil/ai-newspaper.esm.js';
-      document.head.appendChild(stencilEsm);
-
-      const stencilLegacy = document.createElement('script');
-      stencilLegacy.noModule = true;
-      stencilLegacy.src = '/components/article-ui/stencil/ai-newspaper.js';
-      document.head.appendChild(stencilLegacy);
-    </script>
-    <script type="module">
-      const button = document.getElementById('runOrchestrator');
-      const status = document.getElementById('runStatus');
-      const refreshWidgets = async () => {
-        await Promise.all([
-          customElements.whenDefined('trend-ui'),
-          customElements.whenDefined('article-ui'),
-          customElements.whenDefined('evaluator-ui'),
-        ]);
-        document.querySelectorAll('trend-ui, article-ui, evaluator-ui').forEach((el) => {
-          if (typeof el.refresh === 'function') el.refresh();
-        });
-      };
-
-      button.addEventListener('click', async () => {
-        status.textContent = 'Running...';
-        button.disabled = true;
-        try {
-          const res = await fetch('/api/agents/orchestrator');
-          const data = await res.json();
-          if (!res.ok) {
-            status.textContent = data?.error || 'Failed';
-            return;
-          }
-          status.textContent = 'Complete';
-          setTimeout(() => {
-            refreshWidgets();
-          }, 300);
-        } catch (err) {
-          status.textContent = 'Error';
-        } finally {
-          button.disabled = false;
-        }
-      });
-    </script>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>
