@@ -1,17 +1,34 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './styles.css';
 
 import './components/trend-ui/trend-ui';
 import './components/evaluator-ui/evaluator-ui';
-import '/components/article-ui/stencil/ai-newspaper.esm.js';
 
 const App = () => {
   const [status, setStatus] = useState('Idle');
   const [running, setRunning] = useState(false);
 
   const trendRef = useRef<HTMLElement | null>(null);
-  const articleRef = useRef<HTMLElement | null>(null);
   const evaluatorRef = useRef<HTMLElement | null>(null);
+  const articleRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const ensureScript = (src: string, isModule: boolean) => {
+      const existing = document.querySelector(`script[src="${src}"]`);
+      if (existing) return;
+      const script = document.createElement('script');
+      script.src = src;
+      if (isModule) {
+        script.type = 'module';
+      } else {
+        (script as any).noModule = true;
+      }
+      document.head.appendChild(script);
+    };
+
+    ensureScript('/components/article-ui/stencil/ai-newspaper.esm.js', true);
+    ensureScript('/components/article-ui/stencil/ai-newspaper.js', false);
+  }, []);
 
   const refreshWidgets = async () => {
     await Promise.all([
@@ -20,11 +37,15 @@ const App = () => {
       customElements.whenDefined('evaluator-ui'),
     ]);
 
-    [trendRef.current, articleRef.current, evaluatorRef.current].forEach((el) => {
-      if (el && typeof (el as any).refresh === 'function') {
-        (el as any).refresh();
-      }
-    });
+    if (trendRef.current && typeof (trendRef.current as any).refresh === 'function') {
+      (trendRef.current as any).refresh();
+    }
+    if (articleRef.current && typeof (articleRef.current as any).refresh === 'function') {
+      (articleRef.current as any).refresh();
+    }
+    if (evaluatorRef.current && typeof (evaluatorRef.current as any).refresh === 'function') {
+      await (evaluatorRef.current as any).refresh();
+    }
   };
 
   const runOrchestrator = async () => {
@@ -59,9 +80,13 @@ const App = () => {
       </header>
 
       <section className="grid">
-        <trend-ui ref={trendRef as any}></trend-ui>
-        <article-ui ref={articleRef as any}></article-ui>
-        <evaluator-ui ref={evaluatorRef as any}></evaluator-ui>
+        <trend-ui ref={trendRef}></trend-ui>
+        <article-ui ref={articleRef}></article-ui>
+        <evaluator-ui 
+          ref={evaluatorRef} 
+          showInfo={true}
+          onLoaded={() => console.log('Evaluator UI loaded!')}
+        ></evaluator-ui>
       </section>
     </>
   );

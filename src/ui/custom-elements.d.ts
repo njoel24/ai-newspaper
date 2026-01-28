@@ -1,11 +1,11 @@
-import type React from 'react';
+import React from 'react';
 
-declare namespace JSX {
-  interface IntrinsicElements extends React.JSX.IntrinsicElements {
-    'trend-ui': any;
-    'article-ui': any;
-    'evaluator-ui': any;
+declare module 'react' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'trend-ui': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+      'article-ui': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+      'evaluator-ui': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & { showInfo?: boolean; onLoaded?: () => void }, HTMLElement>;
+    }
   }
 }
-
-declare module '/components/article-ui/stencil/ai-newspaper.esm.js';

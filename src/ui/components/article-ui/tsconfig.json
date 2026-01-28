@@ -12,5 +12,4 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": false
   },
-  "include": ["**/*.tsx", "**/*.ts"]
 }

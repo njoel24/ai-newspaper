@@ -11,7 +11,6 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       input: path.resolve(__dirname, "src/ui/index.html"),
-      external: ["/components/article-ui/stencil/ai-newspaper.esm.js"],
     },
   },
   server: {

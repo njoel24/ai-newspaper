@@ -6,33 +6,19 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface ArticleUi {
-        "refresh": () => Promise<void>;
-    }
 }
 declare global {
-    interface HTMLArticleUiElement extends Components.ArticleUi, HTMLStencilElement {
-    }
-    var HTMLArticleUiElement: {
-        prototype: HTMLArticleUiElement;
-        new (): HTMLArticleUiElement;
-    };
     interface HTMLElementTagNameMap {
-        "article-ui": HTMLArticleUiElement;
     }
 }
 declare namespace LocalJSX {
-    interface ArticleUi {
-    }
     interface IntrinsicElements {
-        "article-ui": ArticleUi;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "article-ui": LocalJSX.ArticleUi & JSXBase.HTMLAttributes<HTMLArticleUiElement>;
         }
     }
 }
