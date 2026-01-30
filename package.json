@@ -2,7 +2,9 @@
   "name": "ai-newspaper",
   "version": "1.0.0",
   "type": "module",
-  "main": "src/main.ts",
+  "workspaces": [
+    "src/packages/*"
+  ],
   "scripts": {
     "dev": "vite",
     "dev:server": "ts-node-esm src/server.ts",
@@ -14,8 +16,9 @@
     "format:check": "prettier --check \"src/**/*.{ts,json,md,css,html}\" \"*.md\"",
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
-    "build": "tsc && npm run build:article-ui && npm run build:ui",
-    "build:article-ui": "cd src/packages/article-ui && npm run build",
+    "prepare": "npm run build:packages",
+    "build": "tsc && npm run build:ui",
+    "build:packages": "npm run build --workspaces --if-present",
     "build:ui": "vite build",
     "clean": "rm -rf node_modules dist"
   },

@@ -8,6 +8,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@ai-newspaper/article-ui': path.resolve(__dirname, 'src/packages/article-ui/article-ui.tsx'),
+      '@ai-newspaper/evaluator-ui': path.resolve(__dirname, 'src/packages/evaluator-ui/evaluator-ui.tsx'),
     },
   },
   plugins: [

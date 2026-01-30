@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import './styles.css';
 
 import './components/trend-ui/trend-ui';
-import './components/evaluator-ui/evaluator-ui';
+import '@ai-newspaper/evaluator-ui';
 import '@ai-newspaper/article-ui';
 
 const App = () => {

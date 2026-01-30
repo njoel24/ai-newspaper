@@ -4,9 +4,9 @@ import { resolve } from 'path';
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'article-ui.tsx'),
-      name: 'ArticleUI',
-      fileName: 'article-ui',
+      entry: resolve(__dirname, 'evaluator-ui.tsx'),
+      name: 'EvaluatorUI',
+      fileName: 'evaluator-ui',
       formats: ['es']
     },
     outDir: 'dist',
