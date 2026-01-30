@@ -4,6 +4,28 @@
     <meta charset="UTF-8" />
     <title>🗞 AI Newspaper Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Polyfill for process.env used by some modules
+      window.process = { env: { NODE_ENV: 'production' } };
+    </script>
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://esm.sh/lit@3.3.1",
+          "lit/": "https://esm.sh/lit@3.3.1/",
+          "lit/decorators.js": "https://esm.sh/lit@3.3.1/decorators.js",
+          "@lit/reactive-element": "https://esm.sh/@lit/reactive-element@2.0.4",
+          "@lit/reactive-element/": "https://esm.sh/@lit/reactive-element@2.0.4/",
+          "@lit/react": "https://esm.sh/@lit/react@1.0.2",
+          "react": "https://esm.sh/react@18.3.1",
+          "react/": "https://esm.sh/react@18.3.1/",
+          "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+          "react-dom": "https://esm.sh/react-dom@18.3.1",
+          "react-dom/": "https://esm.sh/react-dom@18.3.1/",
+          "react-dom/client": "https://esm.sh/react-dom@18.3.1/client"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

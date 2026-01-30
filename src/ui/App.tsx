@@ -1,17 +1,34 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, lazy, Suspense } from 'react';
 import './styles.css';
 
 import './components/trend-ui/trend-ui';
-import '@ai-newspaper/evaluator-ui';
-import '@ai-newspaper/article-ui';
+
+// Custom component for lazy-loaded modules with Suspense
+const LazyComponent = ({ 
+  path, 
+  fallback = <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>,
+  ...props 
+}: { path: string; fallback?: React.ReactNode; [key: string]: any }) => {
+  const Component = lazy(() =>
+    import(path).then(mod => ({
+      default: mod.default(React)
+    }))
+  );
+
+  return (
+    <Suspense fallback={fallback}>
+      <Component {...props} />
+    </Suspense>
+  );
+};
 
 const App = () => {
   const [status, setStatus] = useState('Idle');
   const [running, setRunning] = useState(false);
 
   const trendRef = useRef<HTMLElement | null>(null);
-  const evaluatorRef = useRef<HTMLElement | null>(null);
-  const articleRef = useRef<HTMLElement | null>(null);
+  const evaluatorRef = useRef<any>(null);
+  const articleRef = useRef<any>(null);
 
   const refreshWidgets = async () => {
     await Promise.all([
@@ -64,12 +81,18 @@ const App = () => {
 
       <section className="grid">
         <trend-ui ref={trendRef}></trend-ui>
-        <article-ui ref={articleRef}></article-ui>
-        <evaluator-ui 
-          ref={evaluatorRef} 
+        <LazyComponent 
+          path="/src/packages/article-ui/dist/ArticleUI.js"
+          ref={articleRef}
+          fallback={<div style={{ padding: '20px', textAlign: 'center' }}>Loading Article...</div>}
+        />
+        <LazyComponent 
+          path="/src/packages/evaluator-ui/dist/EvaluatorUI.js"
+          ref={evaluatorRef}
           showInfo={true}
           onLoaded={() => console.log('Evaluator UI loaded!')}
-        ></evaluator-ui>
+          fallback={<div style={{ padding: '20px', textAlign: 'center' }}>Loading Evaluator...</div>}
+        />
       </section>
     </>
   );

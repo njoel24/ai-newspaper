@@ -20,7 +20,7 @@
     "build": "tsc && npm run build:ui",
     "build:packages": "npm run build --workspaces --if-present",
     "build:ui": "vite build",
-    "clean": "rm -rf node_modules dist"
+    "clean": "rm -rf node_modules dist && npm run clean --workspaces --if-present"
   },
   "dependencies": {
     "@lit/react": "^1.0.2",

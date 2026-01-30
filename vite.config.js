@@ -5,12 +5,6 @@ import federation from "@originjs/vite-plugin-federation";
 
 export default defineConfig({
   root: "src/ui",
-  resolve: {
-    alias: {
-      '@ai-newspaper/article-ui': path.resolve(__dirname, 'src/packages/article-ui/article-ui.tsx'),
-      '@ai-newspaper/evaluator-ui': path.resolve(__dirname, 'src/packages/evaluator-ui/evaluator-ui.tsx'),
-    },
-  },
   plugins: [
     react(),
     // Module Federation: Enables React dependency sharing across micro-frontends
@@ -43,12 +37,16 @@ export default defineConfig({
     cssCodeSplit: false,
     rollupOptions: {
       input: path.resolve(__dirname, "src/ui/index.html"),
+      external: [
+        '/src/packages/article-ui/dist/ArticleUI.js',
+        '/src/packages/evaluator-ui/dist/EvaluatorUI.js'
+      ]
     },
   },
   server: {
     port: 5173,
     proxy: {
       "/api": "http://localhost:3000", // proxy backend API
-    },
+    }
   },
 });

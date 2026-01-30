@@ -1,9 +1,9 @@
 import { createComponent } from '@lit/react';
-import { EvaluatorUI as EvaluatorElement } from './evaluator-ui.js';
+import { ArticleUI as ArticleElement } from './article-ui.js';
 
 // Factory function - receives React from main app to ensure singleton
 export default (react: any) => createComponent({
   react,
-  tagName: 'evaluator-ui',
-  elementClass: EvaluatorElement,
+  tagName: 'article-ui',
+  elementClass: ArticleElement,
 });

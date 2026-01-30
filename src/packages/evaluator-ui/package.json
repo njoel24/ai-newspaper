@@ -9,14 +9,28 @@
     ".": {
       "import": "./dist/evaluator-ui.js",
       "types": "./dist/evaluator-ui.d.ts"
+    },
+    "./react": {
+      "import": "./dist/EvaluatorUI.js",
+      "types": "./dist/EvaluatorUI.d.ts"
+    },
+    "./standalone": {
+      "import": "./dist/standalone/evaluator-ui.standalone.js",
+      "types": "./dist/evaluator-ui.d.ts"
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc && vite build",
-    "dev": "vite build --watch"
+    "build": "npm run build:webcomponent && npm run build:react",
+    "build:webcomponent": "tsc && vite build",
+    "build:react": "REACT=true vite build",
+    "build:standalone": "tsc && STANDALONE=true vite build",
+    "build:all": "npm run build && npm run build:standalone",
+    "prepublishOnly": "npm run build:all",
+    "dev": "vite build --watch",
+    "clean": "rm -rf dist node_modules"
   },
   "dependencies": {
     "@lit/react": "^1.0.2",

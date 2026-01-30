@@ -7,6 +7,13 @@ import { clearAnalytics, clearArticles, clearTrends, getArticles, getAnalyticsSu
 export const app = express();
 app.use(express.json());
 
+// Serve package dist folders for runtime component loading
+const articleUiDist = path.join(process.cwd(), 'src', 'packages', 'article-ui', 'dist');
+app.use('/src/packages/article-ui/dist', express.static(articleUiDist));
+
+const evaluatorUiDist = path.join(process.cwd(), 'src', 'packages', 'evaluator-ui', 'dist');
+app.use('/src/packages/evaluator-ui/dist', express.static(evaluatorUiDist));
+
 const uiDir = path.join(process.cwd(), 'dist', 'ui');
 app.use(express.static(uiDir));
 
