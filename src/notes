@@ -28,3 +28,4 @@ During earlier runs we hit jsdom/parse5 ESM issues due to the environment and No
 package.json was updated by npm to reflect installed devDependency versions.
 
 ollama, lm studio, llama.cpp, localAi, vLLM 
+let's also use workspaces and github actions

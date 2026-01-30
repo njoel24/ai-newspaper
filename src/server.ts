@@ -97,7 +97,20 @@ app.post('/api/analytics/clear', async (_req, res) => {
 
 if (process.env.NODE_ENV !== 'test') {
   const port = process.env.PORT || 3000;
-  app.listen(port, () => console.log(`Server running on http://localhost:${port}`));
+  app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+    console.log('Server is ready and listening for requests...');
+  });
+  
+  process.on('uncaughtException', (err) => {
+    console.error('Uncaught exception:', err);
+    process.exit(1);
+  });
+  
+  process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled rejection at:', promise, 'reason:', reason);
+    process.exit(1);
+  });
 }
 
 export default app;

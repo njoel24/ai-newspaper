@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './styles.css';
 
 import './components/trend-ui/trend-ui';
 import './components/evaluator-ui/evaluator-ui';
+import '@ai-newspaper/article-ui';
 
 const App = () => {
   const [status, setStatus] = useState('Idle');
@@ -11,24 +12,6 @@ const App = () => {
   const trendRef = useRef<HTMLElement | null>(null);
   const evaluatorRef = useRef<HTMLElement | null>(null);
   const articleRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    const ensureScript = (src: string, isModule: boolean) => {
-      const existing = document.querySelector(`script[src="${src}"]`);
-      if (existing) return;
-      const script = document.createElement('script');
-      script.src = src;
-      if (isModule) {
-        script.type = 'module';
-      } else {
-        (script as any).noModule = true;
-      }
-      document.head.appendChild(script);
-    };
-
-    ensureScript('/components/article-ui/stencil/ai-newspaper.esm.js', true);
-    ensureScript('/components/article-ui/stencil/ai-newspaper.js', false);
-  }, []);
 
   const refreshWidgets = async () => {
     await Promise.all([
