@@ -15,10 +15,9 @@ export default defineConfig({
     },
     rollupOptions: isStandalone ? {} : {
       external: (id) => {
-        // Don't externalize the entry file itself
-        if (id.endsWith('ArticleUI.tsx')) return false;
-        // Externalize all dependencies for wrapper builds
-        return !id.endsWith('ArticleUI.tsx');
+        // Externalize React, React-DOM, and Lit
+        if (id.match(/^react($|\/)/) || id.match(/^react-dom($|\/)/) || id.match(/^lit($|\/)/) || id === 'lit') return true;
+        return false;
       }
     },
     outDir: isStandalone ? 'dist/standalone' : 'dist',
