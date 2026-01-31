@@ -13,8 +13,8 @@ export default defineConfig({
     federation({
       name: "ai-newspaper",
       remotes: {
-        articleUI: "http://localhost:5173/src/packages/article-ui/dist/remoteEntry.js",
-        evaluatorUI: "http://localhost:5174/src/packages/evaluator-ui/dist/remoteEntry.js",
+        articleUI: "http://localhost:3000/src/packages/article-ui/dist/remoteEntry.js",
+        evaluatorUI: "http://localhost:3000/src/packages/evaluator-ui/dist/remoteEntry.js",
       },
       shared: {
         react: {
