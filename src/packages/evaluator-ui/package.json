@@ -2,15 +2,11 @@
   "name": "@ai-newspaper/evaluator-ui",
   "version": "1.0.0",
   "type": "module",
-  "main": "./dist/evaluator-ui.js",
-  "module": "./dist/evaluator-ui.js",
-  "types": "./dist/evaluator-ui.d.ts",
+  "main": "./dist/EvaluatorUI.js",
+  "module": "./dist/EvaluatorUI.js",
+  "types": "./dist/EvaluatorUI.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/evaluator-ui.js",
-      "types": "./dist/evaluator-ui.d.ts"
-    },
-    "./react": {
       "import": "./dist/EvaluatorUI.js",
       "types": "./dist/EvaluatorUI.d.ts"
     },
@@ -23,12 +19,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run build:webcomponent && npm run build:react",
-    "build:webcomponent": "tsc && vite build",
-    "build:react": "REACT=true vite build",
+    "build": "tsc && vite build",
     "build:standalone": "tsc && STANDALONE=true vite build",
-    "build:all": "npm run build && npm run build:standalone",
-    "prepublishOnly": "npm run build:all",
     "dev": "vite build --watch",
     "clean": "rm -rf dist node_modules"
   },

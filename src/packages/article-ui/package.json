@@ -2,15 +2,11 @@
   "name": "@ai-newspaper/article-ui",
   "version": "1.0.0",
   "type": "module",
-  "main": "./dist/article-ui.js",
-  "module": "./dist/article-ui.js",
-  "types": "./dist/article-ui.d.ts",
+  "main": "./dist/ArticleUI.js",
+  "module": "./dist/ArticleUI.js",
+  "types": "./dist/ArticleUI.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/article-ui.js",
-      "types": "./dist/article-ui.d.ts"
-    },
-    "./react": {
       "import": "./dist/ArticleUI.js",
       "types": "./dist/ArticleUI.d.ts"
     },
@@ -23,12 +19,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run build:webcomponent && npm run build:react",
-    "build:webcomponent": "tsc && vite build",
-    "build:react": "REACT=true vite build",
+    "build": "tsc && vite build",
     "build:standalone": "tsc && STANDALONE=true vite build",
-    "build:all": "npm run build && npm run build:standalone",
-    "prepublishOnly": "npm run build:all",
     "dev": "vite build --watch",
     "clean": "rm -rf dist node_modules"
   },
