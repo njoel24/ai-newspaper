@@ -5,6 +5,9 @@ import federation from '@originjs/vite-plugin-federation';
 const isStandalone = process.env.STANDALONE === 'true';
 
 export default defineConfig({
+  define: {
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
+  },
   plugins: !isStandalone ? [
     federation({
       name: 'evaluator-ui-remote',
