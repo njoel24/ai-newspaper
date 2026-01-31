@@ -25,6 +25,14 @@ export default defineConfig({
           singleton: true,
           requiredVersion: "^18.3.1",
         },
+        lit: {
+          singleton: true,
+          requiredVersion: "^3.3.1",
+        },
+        "@lit/react": {
+          singleton: true,
+          requiredVersion: "^1.0.2",
+        },
       },
     }),
   ],

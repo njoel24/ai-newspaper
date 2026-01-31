@@ -15,8 +15,10 @@ export default defineConfig({
     },
     rollupOptions: isStandalone ? {} : {
       external: (id) => {
-        // Externalize React, React-DOM, and Lit
-        if (id.match(/^react($|\/)/) || id.match(/^react-dom($|\/)/) || id.match(/^lit($|\/)/) || id === 'lit') return true;
+        // Externalize lit, @lit/react, react, react-dom (provided by Module Federation)
+        if (id === 'lit' || id.match(/^lit\//)) return true;
+        if (id === '@lit/react' || id.match(/^@lit\/react\//)) return true;
+        if (id.match(/^react($|\/)/) || id.match(/^react-dom($|\/)/)) return true;
         return false;
       }
     },
