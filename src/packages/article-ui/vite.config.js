@@ -14,15 +14,25 @@ export default defineConfig({
       }
     })
   ] : [],
-  build: {
-    lib: isStandalone ? {
+  build: isStandalone ? {
+    lib: {
       entry: resolve(__dirname, 'article-ui.tsx'),
       name: 'ArticleUI',
       fileName: 'article-ui.standalone',
       formats: ['es']
-    } : {},
-    outDir: isStandalone ? 'dist/standalone' : 'dist',
-    emptyOutDir: true ,
+    },
+    outDir: 'dist/standalone',
+    emptyOutDir: true,
+    sourcemap: true
+  } : {
+    lib: {
+      entry: resolve(__dirname, 'ArticleUI.tsx'),
+      name: 'ArticleUI',
+      fileName: 'ArticleUI',
+      formats: ['es']
+    },
+    outDir: 'dist',
+    emptyOutDir: true,
     sourcemap: true
   }
 });

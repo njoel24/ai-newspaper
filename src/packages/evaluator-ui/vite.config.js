@@ -14,14 +14,24 @@ export default defineConfig({
       }
     })
   ] : [],
-  build: {
-    lib: isStandalone ? {
+  build: isStandalone ? {
+    lib: {
       entry: resolve(__dirname, 'evaluator-ui.tsx'),
       name: 'EvaluatorUI',
       fileName: 'evaluator-ui.standalone',
       formats: ['es']
-    } : {},
-    outDir: isStandalone ? 'dist/standalone' : 'dist',
+    },
+    outDir: 'dist/standalone',
+    emptyOutDir: true,
+    sourcemap: true
+  } : {
+    lib: {
+      entry: resolve(__dirname, 'EvaluatorUI.tsx'),
+      name: 'EvaluatorUI',
+      fileName: 'EvaluatorUI',
+      formats: ['es']
+    },
+    outDir: 'dist',
     emptyOutDir: true,
     sourcemap: true
   }

@@ -7,38 +7,6 @@ export default defineConfig({
   root: "src/ui",
   plugins: [
     react(),
-    // Module Federation: Enables React dependency sharing across micro-frontends
-    // React will be loaded as a singleton, ensuring all components use the same instance
-    // This allows external components to consume shared React without bundling it
-    federation({
-      name: "ai-newspaper",
-      remotes: {
-        articleUI: "http://localhost:3000/src/packages/article-ui/dist/remoteEntry.js",
-        evaluatorUI: "http://localhost:3000/src/packages/evaluator-ui/dist/remoteEntry.js",
-      },
-      shared: {
-        react: {
-          singleton: true,
-          requiredVersion: "^18.3.1",
-        },
-        "react-dom": {
-          singleton: true,
-          requiredVersion: "^18.3.1",
-        },
-        "react-dom/client": {
-          singleton: true,
-          requiredVersion: "^18.3.1",
-        },
-        lit: {
-          singleton: true,
-          requiredVersion: "^3.3.1",
-        },
-        "@lit/react": {
-          singleton: true,
-          requiredVersion: "^1.0.2",
-        },
-      },
-    }),
   ],
   build: {
     outDir: "../../dist/ui",
