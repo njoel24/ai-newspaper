@@ -12,6 +12,10 @@ export default defineConfig({
     // This allows external components to consume shared React without bundling it
     federation({
       name: "ai-newspaper",
+      remotes: {
+        articleUI: "http://localhost:5173/src/packages/article-ui/dist/remoteEntry.js",
+        evaluatorUI: "http://localhost:5174/src/packages/evaluator-ui/dist/remoteEntry.js",
+      },
       shared: {
         react: {
           singleton: true,
@@ -45,10 +49,6 @@ export default defineConfig({
     cssCodeSplit: false,
     rollupOptions: {
       input: path.resolve(__dirname, "src/ui/index.html"),
-      external: [
-        '/src/packages/article-ui/dist/ArticleUI.js',
-        '/src/packages/evaluator-ui/dist/EvaluatorUI.js'
-      ]
     },
   },
   server: {

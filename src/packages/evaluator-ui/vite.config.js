@@ -1,29 +1,46 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import federation from '@originjs/vite-plugin-federation';
 
 const isStandalone = process.env.STANDALONE === 'true';
 
 export default defineConfig({
-  build: {
-    lib: {
-      entry: isStandalone 
-        ? resolve(__dirname, 'evaluator-ui.tsx')
-        : resolve(__dirname, 'EvaluatorUI.tsx'),
-      name: 'EvaluatorUI',
-      fileName: isStandalone ? 'evaluator-ui.standalone' : 'EvaluatorUI',
-      formats: ['es']
-    },
-    rollupOptions: isStandalone ? {} : {
-      external: (id) => {
-        // Externalize lit, @lit/react, react, react-dom (provided by Module Federation)
-        if (id === 'lit' || id.match(/^lit\//)) return true;
-        if (id === '@lit/react' || id.match(/^@lit\/react\//)) return true;
-        if (id.match(/^react($|\/)/) || id.match(/^react-dom($|\/)/)) return true;
-        return false;
+  plugins: !isStandalone ? [
+    federation({
+      name: 'evaluator-ui-remote',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './EvaluatorUI': './EvaluatorUI.tsx'
+      },
+      shared: {
+        react: {
+          singleton: true,
+          requiredVersion: '^18.3.1'
+        },
+        'react-dom': {
+          singleton: true,
+          requiredVersion: '^18.3.1'
+        },
+        lit: {
+          singleton: true,
+          requiredVersion: '^3.3.1'
+        },
+        '@lit/react': {
+          singleton: true,
+          requiredVersion: '^1.0.2'
+        }
       }
-    },
+    })
+  ] : [],
+  build: {
+    lib: isStandalone ? {
+      entry: resolve(__dirname, 'evaluator-ui.tsx'),
+      name: 'EvaluatorUI',
+      fileName: 'evaluator-ui.standalone',
+      formats: ['es']
+    } : {},
     outDir: isStandalone ? 'dist/standalone' : 'dist',
-    emptyOutDir: isStandalone ? true : false,
+    emptyOutDir: true,
     sourcemap: true
   }
 });
