@@ -16,8 +16,8 @@ export default defineConfig({
         './EvaluatorUI': './EvaluatorUI.tsx'
       },
       shared: {
-        react: { singleton: true, requiredVersion: false },
-        'react-dom': { singleton: true, requiredVersion: false }
+        react: { singleton: true, requiredVersion: '^18.3.1' },
+        'react-dom': { singleton: true, requiredVersion: '^18.3.1' }
       }
     })
   ] : [],

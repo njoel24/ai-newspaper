@@ -17,8 +17,8 @@ export default defineConfig({
         evaluatorUI: 'http://localhost:5173/src/packages/evaluator-ui/dist/remoteEntry.js'
       },
       shared: {
-        react: { singleton: true, eager: true, requiredVersion: false },
-        'react-dom': { singleton: true, eager: true, requiredVersion: false }
+        react: { singleton: true, eager: true, requiredVersion: '^18.3.1' },
+        'react-dom': { singleton: true, eager: true, requiredVersion: '^18.3.1' }
       }
     })
   ],
