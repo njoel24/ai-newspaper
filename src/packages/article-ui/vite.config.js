@@ -3,20 +3,6 @@ import { resolve } from 'path';
 
 const isStandalone = process.env.STANDALONE === 'true';
 
-const rewriteImportsPlugin = {
-  name: 'rewrite-imports',
-  renderChunk(code) {
-    if (!isStandalone) {
-      // Rewrite relative imports to absolute paths for wrapper builds
-      return code.replace(
-        /from\s+["']\.\/article-ui\.[^"']*["']/g,
-        'from "/src/packages/article-ui/dist/article-ui.js"'
-      );
-    }
-    return code;
-  }
-};
-
 export default defineConfig({
   build: {
     lib: {
@@ -33,9 +19,6 @@ export default defineConfig({
         if (id.endsWith('ArticleUI.tsx')) return false;
         // Externalize all dependencies for wrapper builds
         return !id.endsWith('ArticleUI.tsx');
-      },
-      output: {
-        plugins: [rewriteImportsPlugin]
       }
     },
     outDir: isStandalone ? 'dist/standalone' : 'dist',
