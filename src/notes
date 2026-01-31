@@ -30,3 +30,4 @@ package.json was updated by npm to reflect installed devDependency versions.
 ollama, lm studio, llama.cpp, localAi, vLLM 
 let's also use workspaces and github actions
 ngnix
+process.env
