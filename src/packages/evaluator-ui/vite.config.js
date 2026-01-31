@@ -15,7 +15,10 @@ export default defineConfig({
       exposes: {
         './EvaluatorUI': './EvaluatorUI.tsx'
       },
-      shared: ['react', 'react-dom', 'lit', '@lit/react']
+      shared: {
+        react: { singleton: true, requiredVersion: false },
+        'react-dom': { singleton: true, requiredVersion: false }
+      }
     })
   ] : [],
   build: isStandalone ? {
