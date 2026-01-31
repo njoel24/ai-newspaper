@@ -14,7 +14,8 @@ export default defineConfig({
       filename: 'remoteEntry.js',
       exposes: {
         './ArticleUI': './ArticleUI.tsx'
-      }
+      },
+      shared: ['react', 'react-dom', 'lit', '@lit/react']
     })
   ] : [],
   build: isStandalone ? {

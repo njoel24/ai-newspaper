@@ -14,7 +14,8 @@ export default defineConfig({
       filename: 'remoteEntry.js',
       exposes: {
         './EvaluatorUI': './EvaluatorUI.tsx'
-      }
+      },
+      shared: ['react', 'react-dom', 'lit', '@lit/react']
     })
   ] : [],
   build: isStandalone ? {

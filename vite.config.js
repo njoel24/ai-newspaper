@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import path from "path";
 import react from "@vitejs/plugin-react";
+import federation from "@originjs/vite-plugin-federation";
 
 export default defineConfig({
   root: "src/ui",
@@ -9,6 +10,14 @@ export default defineConfig({
   },
   plugins: [
     react(),
+    federation({
+      name: 'ai-newspaper',
+      remotes: {
+        articleUI: 'http://localhost:5173/src/packages/article-ui/dist/remoteEntry.js',
+        evaluatorUI: 'http://localhost:5173/src/packages/evaluator-ui/dist/remoteEntry.js'
+      },
+      shared: ['react', 'react-dom', 'lit', '@lit/react']
+    })
   ],
   build: {
     outDir: "../../dist/ui",
