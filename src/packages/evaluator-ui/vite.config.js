@@ -6,7 +6,7 @@ const isStandalone = process.env.STANDALONE === 'true';
 
 export default defineConfig({
   define: {
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
+    'globalThis.process': JSON.stringify({ env: { NODE_ENV: process.env.NODE_ENV || 'production' } })
   },
   plugins: !isStandalone ? [
     federation({

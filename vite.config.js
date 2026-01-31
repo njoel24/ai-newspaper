@@ -5,7 +5,7 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   root: "src/ui",
   define: {
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
+    'globalThis.process': JSON.stringify({ env: { NODE_ENV: process.env.NODE_ENV || 'production' } })
   },
   plugins: [
     react(),
