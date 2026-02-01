@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <title>🗞 AI Newspaper Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Preload critical dependencies to reduce request chain -->
+    <link rel="modulepreload" href="https://esm.sh/react@18.3.1" crossorigin />
+    <link rel="modulepreload" href="https://esm.sh/react@18.3.1/jsx-runtime" crossorigin />
+    <link rel="modulepreload" href="https://esm.sh/react-dom@18.3.1" crossorigin />
+    <link rel="modulepreload" href="https://esm.sh/react-dom@18.3.1/client" crossorigin />
+    <link rel="modulepreload" href="https://esm.sh/lit@3.1.0" crossorigin />
+    
     <script>window.process = window.process || {env: {NODE_ENV: 'production'}};</script>
     <script type="importmap">
     {

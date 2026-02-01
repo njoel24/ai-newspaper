@@ -37,3 +37,4 @@ process.env
 externals vs peerdeps
 native app
 lib ode vs app mode
+CHECK PERFORMANCE TAB

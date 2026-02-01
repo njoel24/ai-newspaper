@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import './styles.css';
-
 import './components/trend-ui/trend-ui';
 
 const App = () => {
