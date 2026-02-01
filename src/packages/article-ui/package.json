@@ -21,6 +21,7 @@
   "scripts": {
     "build": "tsc && vite build",
     "build:standalone": "tsc && STANDALONE=true vite build",
+    "build:standalone:full": "node build-standalone.js",
     "dev": "vite build --watch",
     "clean": "rm -rf dist node_modules"
   },
