@@ -5,6 +5,7 @@ import federation from '@originjs/vite-plugin-federation';
 const isStandalone = process.env.STANDALONE === 'true';
 
 export default defineConfig({
+  mode: 'production',
   define: {
     'globalThis.process': JSON.stringify({ env: { NODE_ENV: 'production' } })
   },

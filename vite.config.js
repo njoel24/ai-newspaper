@@ -4,6 +4,7 @@ import react from "@vitejs/plugin-react";
 import federation from "@originjs/vite-plugin-federation";
 
 export default defineConfig({
+  mode: 'production',
   root: "src/ui",
   define: {
     'globalThis.process': JSON.stringify({ env: { NODE_ENV: 'production' } })
