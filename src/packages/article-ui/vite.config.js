@@ -14,6 +14,10 @@ export default defineConfig({
       filename: 'remoteEntry.js',
       exposes: {
         './ArticleUI': './ArticleUI.tsx'
+      },
+      shared: {
+        react: { singleton: true, strictVersion: false },
+        'react-dom': { singleton: true, strictVersion: false }
       }
     })
   ] : [],

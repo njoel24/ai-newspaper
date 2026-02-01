@@ -14,6 +14,10 @@ export default defineConfig({
       filename: 'remoteEntry.js',
       exposes: {
         './EvaluatorUI': './EvaluatorUI.tsx'
+      },
+      shared: {
+        react: { singleton: true, strictVersion: false },
+        'react-dom': { singleton: true, strictVersion: false }
       }
     })
   ] : [],
