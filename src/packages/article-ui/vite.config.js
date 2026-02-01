@@ -18,7 +18,8 @@ export default defineConfig({
       },
       shared: {
         react: { singleton: true, strictVersion: false },
-        'react-dom': { singleton: true, strictVersion: false }
+        'react-dom': { singleton: true, strictVersion: false },
+      
       }
     })
   ] : [],
@@ -34,18 +35,18 @@ export default defineConfig({
     sourcemap: true,
     minify: true
   } : {
-    lib: {
-      entry: resolve(__dirname, 'ArticleUI.tsx'),
-      name: 'ArticleUI',
-      fileName: 'ArticleUI',
-      formats: ['es']
-    },
     outDir: 'dist',
     emptyOutDir: true,
+    assetsDir: '',
     sourcemap: true,
     minify: true,
     rollupOptions: {
-      external: ['react', 'react-dom', /^react\//, /^react-dom\//]
+      input: resolve(__dirname, 'ArticleUI.tsx'),
+      external: ['react', 'react-dom'],
+      output: {
+        entryFileNames: 'ArticleUI.js',
+        chunkFileNames: '[name]-[hash].js'
+      }
     }
   }
 });
