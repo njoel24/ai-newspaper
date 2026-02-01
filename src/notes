@@ -31,3 +31,8 @@ ollama, lm studio, llama.cpp, localAi, vLLM
 let's also use workspaces and github actions
 ngnix
 process.env
+
+
+// inline style, network request chain, reintroduce web-component ,
+externals vs peerdeps
+native app

@@ -1,7 +1,7 @@
 // @ts-nocheck
 /** @jsxImportSource react */
 import React, { useCallback, useEffect, useState } from 'react';
-import './article-ui.css';
+import './article-ui.css?inline';
 
 type Article = {
   id: string;

@@ -18,6 +18,7 @@ export default defineConfig({
     target: "esnext",
     minify: true,
     cssCodeSplit: false,
+    cssMinify: true,
     rollupOptions: {
       input: path.resolve(__dirname, "src/ui/index.html"),
       external: (id) => {
