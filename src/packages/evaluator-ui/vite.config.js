@@ -15,11 +15,6 @@ export default defineConfig({
       filename: 'remoteEntry.js',
       exposes: {
         './EvaluatorUI': './EvaluatorUI.tsx'
-      },
-      shared: {
-        react: { singleton: true, strictVersion: false },
-        'react-dom': { singleton: true, strictVersion: false },
-       
       }
     })
   ] : [],
@@ -42,7 +37,7 @@ export default defineConfig({
     minify: true,
     rollupOptions: {
       input: resolve(__dirname, 'EvaluatorUI.tsx'),
-      external: ['react', 'react-dom'],
+     
       output: {
         entryFileNames: 'EvaluatorUI.js',
         chunkFileNames: '[name]-[hash].js'
