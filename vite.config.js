@@ -27,7 +27,7 @@ export default defineConfig({
     emptyOutDir: false,
     sourcemap: true,
     target: "esnext",
-    minify: false,
+    minify: true,
     cssCodeSplit: false,
     rollupOptions: {
       input: path.resolve(__dirname, "src/ui/index.html"),

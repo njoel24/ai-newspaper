@@ -26,7 +26,8 @@ export default defineConfig({
     },
     outDir: 'dist/standalone',
     emptyOutDir: true,
-    sourcemap: true
+    sourcemap: true,
+    minify: true
   } : {
     lib: {
       entry: resolve(__dirname, 'ArticleUI.tsx'),
@@ -36,6 +37,10 @@ export default defineConfig({
     },
     outDir: 'dist',
     emptyOutDir: true,
-    sourcemap: true
+    sourcemap: true,
+    minify: true,
+    rollupOptions: {
+      external: ['react', 'react-dom']
+    }
   }
 });
