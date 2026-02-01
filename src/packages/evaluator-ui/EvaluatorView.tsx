@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import evaluatorStyles from './evaluator-ui.css?inline';
+import './evaluator-ui.css';
 
 type EvaluatorViewProps = {
   showInfo: boolean;
@@ -57,8 +57,7 @@ const EvaluatorView = ({ showInfo, registerRefreshHandler }: EvaluatorViewProps)
   }, [refresh]);
 
   return (
-    <>
-      <style>{evaluatorStyles}</style>
+    <div className="evaluator-view">
       <header>
         <h3>📊 Analytics</h3>
         <div>
@@ -76,7 +75,7 @@ const EvaluatorView = ({ showInfo, registerRefreshHandler }: EvaluatorViewProps)
         </div>
       )}
       <div className="summary">{summaryText}</div>
-    </>
+    </div>
   );
 };
 

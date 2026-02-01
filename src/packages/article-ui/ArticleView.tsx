@@ -1,6 +1,7 @@
 // @ts-nocheck
 /** @jsxImportSource react */
 import React, { useCallback, useEffect, useState } from 'react';
+import './article-ui.css';
 
 type Article = {
   id: string;
@@ -73,7 +74,7 @@ const ArticleView = ({ registerRefreshHandler }: ArticleViewProps) => {
   const bodyText = (selectedArticle?.body || '').replace(/\\n/g, '\n');
 
   return (
-    <div>
+    <div className="article-view">
       <header>
         <h3>📰 Articles</h3>
         <div>

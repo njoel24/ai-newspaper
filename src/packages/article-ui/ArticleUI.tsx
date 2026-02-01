@@ -1,2 +1,2 @@
-// Re-export the native web component for lazy loading
-export { ArticleUI } from './article-ui.js';
+// Export React component directly for Module Federation
+export { default } from './ArticleView';
