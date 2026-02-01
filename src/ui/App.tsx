@@ -3,22 +3,6 @@ import './styles.css';
 
 import './components/trend-ui/trend-ui';
 
-// Load web components
-const loadScript = (src: string) => {
-  return new Promise((resolve, reject) => {
-    if (document.querySelector(`script[src="${src}"]`)) {
-      resolve(true);
-      return;
-    }
-    const script = document.createElement('script');
-    script.type = 'module';
-    script.src = src;
-    script.onload = () => resolve(true);
-    script.onerror = reject;
-    document.head.appendChild(script);
-  });
-};
-
 const App = () => {
   const [status, setStatus] = useState('Idle');
   const [running, setRunning] = useState(false);
@@ -29,10 +13,10 @@ const App = () => {
   const articleRef = useRef<any>(null);
 
   useEffect(() => {
-    // Load web components
+    // Lazy load web components
     Promise.all([
-      loadScript('/src/packages/article-ui/dist/article-ui.js'),
-      loadScript('/src/packages/evaluator-ui/dist/evaluator-ui.js')
+      import('../packages/article-ui/dist/article-ui.js'),
+      import('../packages/evaluator-ui/dist/evaluator-ui.js')
     ]).then(() => {
       setComponentsLoaded(true);
     });
@@ -85,8 +69,12 @@ const App = () => {
 
       <section className="grid">
         <trend-ui ref={trendRef}></trend-ui>
-        <article-ui ref={articleRef} style={{ display: componentsLoaded ? 'block' : 'none' }}></article-ui>
-        <evaluator-ui ref={evaluatorRef} showInfo={true} style={{ display: componentsLoaded ? 'block' : 'none' }}></evaluator-ui>
+        {componentsLoaded && (
+          <>
+            <article-ui ref={articleRef}></article-ui>
+            <evaluator-ui ref={evaluatorRef} showInfo={true}></evaluator-ui>
+          </>
+        )}
       </section>
     </>
   );
