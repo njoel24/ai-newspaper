@@ -6,7 +6,7 @@ const isStandalone = process.env.STANDALONE === 'true';
 
 export default defineConfig({
   define: {
-    'globalThis.process': JSON.stringify({ env: { NODE_ENV: process.env.NODE_ENV || 'production' } })
+    'globalThis.process': JSON.stringify({ env: { NODE_ENV: 'production' } })
   },
   plugins: !isStandalone ? [
     federation({
@@ -42,9 +42,6 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: true,
     sourcemap: true,
-    minify: true,
-    rollupOptions: {
-      external: ['react', 'react-dom']
-    }
+    minify: true
   }
 });

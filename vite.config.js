@@ -6,7 +6,7 @@ import federation from "@originjs/vite-plugin-federation";
 export default defineConfig({
   root: "src/ui",
   define: {
-    'globalThis.process': JSON.stringify({ env: { NODE_ENV: process.env.NODE_ENV || 'production' } })
+    'globalThis.process': JSON.stringify({ env: { NODE_ENV: 'production' } })
   },
   plugins: [
     react(),
@@ -30,7 +30,7 @@ export default defineConfig({
     minify: true,
     cssCodeSplit: false,
     rollupOptions: {
-      input: path.resolve(__dirname, "src/ui/index.html"),
+      input: path.resolve(__dirname, "src/ui/index.html")
     },
   },
   server: {
