@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import './evaluator-ui.css?inline';
 
 type EvaluatorViewProps = {
   showInfo: boolean;

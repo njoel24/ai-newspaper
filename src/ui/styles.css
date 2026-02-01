@@ -37,6 +37,16 @@ h1 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
+
+/* Ensure web components display as block and fill grid cells */
+trend-ui,
+article-ui,
+evaluator-ui {
+  display: block;
+  min-width: 0;
+  min-height: 0;
+}
+
 @media (max-width: 1024px) {
   .grid {
     grid-template-columns: 1fr;

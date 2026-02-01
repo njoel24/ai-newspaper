@@ -22,12 +22,12 @@ export default defineConfig({
     minify: true
   } : {
     rollupOptions: {
-      input: resolve(__dirname, 'ArticleView.tsx'),
+      input: resolve(__dirname, 'index.html'),
       output: {
-        entryFileNames: 'ArticleView.js',
-        format: 'es'
+        entryFileNames: 'article-ui.js'
       },
-      external: ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime']
+      external: ['react', 'react/jsx-runtime', 'react-dom', 'react-dom/client'],
+      treeshake: true
     },
     outDir: 'dist',
     emptyOutDir: true,

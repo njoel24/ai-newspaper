@@ -1,19 +1,42 @@
 import React, { useRef, useState, lazy, Suspense, useEffect } from 'react';
-import './styles.css?inline';
+import './styles.css';
 
 import './components/trend-ui/trend-ui';
 
-// Direct imports from built packages
-const ArticleView = lazy(() => import('../packages/article-ui/dist/ArticleView.js'));
-const EvaluatorView = lazy(() => import('../packages/evaluator-ui/dist/EvaluatorView.js'));
+// Load web components
+const loadScript = (src: string) => {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`script[src="${src}"]`)) {
+      resolve(true);
+      return;
+    }
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.src = src;
+    script.onload = () => resolve(true);
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+};
 
 const App = () => {
   const [status, setStatus] = useState('Idle');
   const [running, setRunning] = useState(false);
+  const [componentsLoaded, setComponentsLoaded] = useState(false);
 
   const trendRef = useRef<HTMLElement | null>(null);
   const evaluatorRef = useRef<any>(null);
   const articleRef = useRef<any>(null);
+
+  useEffect(() => {
+    // Load web components
+    Promise.all([
+      loadScript('/src/packages/article-ui/dist/article-ui.js'),
+      loadScript('/src/packages/evaluator-ui/dist/evaluator-ui.js')
+    ]).then(() => {
+      setComponentsLoaded(true);
+    });
+  }, []);
 
   const refreshWidgets = async () => {
     await customElements.whenDefined('trend-ui');
@@ -62,21 +85,8 @@ const App = () => {
 
       <section className="grid">
         <trend-ui ref={trendRef}></trend-ui>
-        
-        <Suspense fallback={<div style={{ padding: '20px', textAlign: 'center' }}>Loading Article...</div>}>
-          <ArticleView registerRefreshHandler={(fn: () => Promise<void>) => {
-            articleRef.current = { refresh: fn };
-          }} />
-        </Suspense>
-        
-        <Suspense fallback={<div style={{ padding: '20px', textAlign: 'center' }}>Loading Evaluator...</div>}>
-          <EvaluatorView 
-            showInfo={true}
-            registerRefreshHandler={(fn: () => Promise<void>) => {
-              evaluatorRef.current = { refresh: fn };
-            }}
-          />
-        </Suspense>
+        <article-ui ref={articleRef} style={{ display: componentsLoaded ? 'block' : 'none' }}></article-ui>
+        <evaluator-ui ref={evaluatorRef} showInfo={true} style={{ display: componentsLoaded ? 'block' : 'none' }}></evaluator-ui>
       </section>
     </>
   );

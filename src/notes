@@ -36,3 +36,4 @@ process.env
 // inline style, network request chain, reintroduce web-component ,
 externals vs peerdeps
 native app
+lib ode vs app mode

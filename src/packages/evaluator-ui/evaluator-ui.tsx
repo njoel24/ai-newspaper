@@ -1,11 +1,14 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import React from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import EvaluatorView from './EvaluatorView';
+import styles from './evaluator-ui.css?inline';
 
 @customElement('evaluator-ui')
 export class EvaluatorUI extends LitElement {
+  static styles = unsafeCSS(styles);
+  
   @property({ type: Boolean }) showInfo = false;
   @property({ attribute: false }) onLoaded?: () => void;
   
