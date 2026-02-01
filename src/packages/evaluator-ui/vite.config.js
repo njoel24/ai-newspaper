@@ -26,7 +26,7 @@ export default defineConfig({
       output: {
         entryFileNames: 'evaluator-ui.js'
       },
-      external: ['react', 'react/jsx-runtime', 'react-dom', 'react-dom/client'],
+      external: ['react', 'react/jsx-runtime', 'react-dom', 'react-dom/client', 'lit', 'lit/decorators.js'],
       treeshake: true
     },
     outDir: 'dist',

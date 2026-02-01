@@ -1,4 +1,4 @@
-import React, { useRef, useState, lazy, Suspense, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import './styles.css';
 
 import './components/trend-ui/trend-ui';
