@@ -43,6 +43,9 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: true,
     sourcemap: true,
-    minify: true
+    minify: true,
+    rollupOptions: {
+      external: ['react', 'react-dom', /^react\//, /^react-dom\//]
+    }
   }
 });
