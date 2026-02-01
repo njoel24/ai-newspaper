@@ -1,9 +1,2 @@
-import { createComponent } from '@lit/react';
-import { EvaluatorUI as EvaluatorElement } from './evaluator-ui.js';
-
-// Factory function - receives React from main app to ensure singleton
-export default (react: any) => createComponent({
-  react,
-  tagName: 'evaluator-ui',
-  elementClass: EvaluatorElement,
-});
+// Re-export the native web component for lazy loading
+export { EvaluatorUI } from './evaluator-ui.js';

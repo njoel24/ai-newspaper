@@ -15,6 +15,11 @@ export default defineConfig({
       filename: 'remoteEntry.js',
       exposes: {
         './ArticleUI': './ArticleUI.tsx'
+      },
+      shared: {
+        react: { singleton: true, strictVersion: false },
+        'react-dom': { singleton: true, strictVersion: false },
+        'react/jsx-runtime': { singleton: true, strictVersion: false }
       }
     })
   ] : [],
@@ -37,6 +42,7 @@ export default defineConfig({
     minify: true,
     rollupOptions: {
       input: resolve(__dirname, 'ArticleUI.tsx'),
+      external: ['react', 'react-dom', 'react/jsx-runtime'],
       output: {
         entryFileNames: 'ArticleUI.js',
         chunkFileNames: '[name]-[hash].js'

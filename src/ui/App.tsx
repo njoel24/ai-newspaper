@@ -1,25 +1,23 @@
-import React, { useRef, useState, lazy, Suspense } from 'react';
+import React, { useRef, useState } from 'react';
 import './styles.css';
 
 import './components/trend-ui/trend-ui';
 
-// Custom component for lazy-loaded modules with Suspense
-const LazyComponent = ({ 
-  path, 
-  fallback = <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>,
-  ...props 
-}: { path: string; fallback?: React.ReactNode; [key: string]: any }) => {
-  const Component = lazy(() =>
-    import(path).then(mod => ({
-      default: mod.default(React)
-    }))
-  );
-
-  return (
-    <Suspense fallback={fallback}>
-      <Component {...props} />
-    </Suspense>
-  );
+// Lazy load web components natively
+const useLazyWebComponent = (path: string, tagName: string) => {
+  const [loaded, setLoaded] = React.useState(false);
+  
+  React.useEffect(() => {
+    if (!customElements.get(tagName)) {
+      import(path).then(() => {
+        customElements.whenDefined(tagName).then(() => setLoaded(true));
+      });
+    } else {
+      setLoaded(true);
+    }
+  }, [path, tagName]);
+  
+  return loaded;
 };
 
 const App = () => {
@@ -67,6 +65,9 @@ const App = () => {
     }
   };
 
+  const articleLoaded = useLazyWebComponent('/src/packages/article-ui/dist/ArticleUI.js', 'article-ui');
+  const evaluatorLoaded = useLazyWebComponent('/src/packages/evaluator-ui/dist/EvaluatorUI.js', 'evaluator-ui');
+
   return (
     <>
       <header>
@@ -81,18 +82,22 @@ const App = () => {
 
       <section className="grid">
         <trend-ui ref={trendRef}></trend-ui>
-        <LazyComponent 
-          path="/src/packages/article-ui/dist/ArticleUI.js"
-          ref={articleRef}
-          fallback={<div style={{ padding: '20px', textAlign: 'center' }}>Loading Article...</div>}
-        />
-        <LazyComponent 
-          path="/src/packages/evaluator-ui/dist/EvaluatorUI.js"
-          ref={evaluatorRef}
-          showInfo={true}
-          onLoaded={() => console.log('Evaluator UI loaded!')}
-          fallback={<div style={{ padding: '20px', textAlign: 'center' }}>Loading Evaluator...</div>}
-        />
+        
+        {articleLoaded ? (
+          <article-ui ref={articleRef}></article-ui>
+        ) : (
+          <div style={{ padding: '20px', textAlign: 'center' }}>Loading Article...</div>
+        )}
+        
+        {evaluatorLoaded ? (
+          <evaluator-ui 
+            ref={evaluatorRef}
+            showInfo={true}
+            onLoaded={() => console.log('Evaluator UI loaded!')}
+          ></evaluator-ui>
+        ) : (
+          <div style={{ padding: '20px', textAlign: 'center' }}>Loading Evaluator...</div>
+        )}
       </section>
     </>
   );
