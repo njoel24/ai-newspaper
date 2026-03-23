@@ -1,7 +1,7 @@
-import { runPlannerAgent } from './plannerAgent.js';
-import { runWriterAgent } from './writerAgent.js';
-import { runEvaluatorAgent } from './evaluatorAgent.js';
-import { runTrendAgent } from './trendAgent.js';
+import { runPlannerAgent } from './plannerAgent.ts';
+import { runWriterAgent } from './writerAgent.ts';
+import { runEvaluatorAgent } from './evaluatorAgent.ts';
+import { runTrendAgent } from './trendAgent.ts';
 
 export async function runOrchestratorAgent() {
   const summary = {

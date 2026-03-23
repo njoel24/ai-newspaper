@@ -1,8 +1,15 @@
 import express from 'express';
 import path from 'path';
-import { runPlannerAgent } from './agents/plannerAgent.js';
-import { runOrchestratorAgent } from './agents/orchestratorAgent.js';
-import { clearAnalytics, clearArticles, clearTrends, getArticles, getAnalyticsSummary, getTrends } from './data/db.js';
+import { runPlannerAgent } from './agents/plannerAgent.ts';
+import { runOrchestratorAgent } from './agents/orchestratorAgent.ts';
+import {
+  clearAnalytics,
+  clearArticles,
+  clearTrends,
+  getArticles,
+  getAnalyticsSummary,
+  getTrends,
+} from './data/db.ts';
 
 export const app = express();
 app.use(express.json());
@@ -89,7 +96,9 @@ app.get('/api/analytics/summary', async (_req, res) => {
     const summary = await getAnalyticsSummary();
     res.json({ summary });
   } catch (err: any) {
-    res.status(err?.status || 500).json({ error: err?.message || 'Failed to load analytics summary' });
+    res
+      .status(err?.status || 500)
+      .json({ error: err?.message || 'Failed to load analytics summary' });
   }
 });
 
@@ -108,12 +117,12 @@ if (process.env.NODE_ENV !== 'test') {
     console.log(`Server running on http://localhost:${port}`);
     console.log('Server is ready and listening for requests...');
   });
-  
+
   process.on('uncaughtException', (err) => {
     console.error('Uncaught exception:', err);
     process.exit(1);
   });
-  
+
   process.on('unhandledRejection', (reason, promise) => {
     console.error('Unhandled rejection at:', promise, 'reason:', reason);
     process.exit(1);

@@ -1,37 +1,31 @@
 import { defineConfig } from 'vite';
-import { resolve } from 'path';
-
-const isStandalone = process.env.STANDALONE === 'true';
+import { federation } from '@module-federation/vite';
 
 export default defineConfig({
   mode: 'production',
   define: {
-    'globalThis.process': JSON.stringify({ env: { NODE_ENV: 'production' } })
+    'globalThis.process': JSON.stringify({ env: { NODE_ENV: 'production' } }),
   },
-  build: isStandalone ? {
-    rollupOptions: {
-      input: resolve(__dirname, 'evaluator-ui.tsx'),
-      output: {
-        entryFileNames: 'evaluator-ui.standalone.js',
-        format: 'es'
-      }
-    },
-    outDir: 'dist/standalone',
-    emptyOutDir: true,
-    sourcemap: true,
-    minify: true
-  } : {
-    rollupOptions: {
-      input: resolve(__dirname, 'index.html'),
-      output: {
-        entryFileNames: 'evaluator-ui.js'
+  plugins: [
+    federation({
+      name: 'evaluator_ui',
+      filename: 'remoteEntry.js',
+      dts: false,
+      exposes: {
+        './EvaluatorUI': './evaluator-ui.tsx',
       },
-      external: ['react', 'react/jsx-runtime', 'react-dom', 'react-dom/client', 'lit', 'lit/decorators.js'],
-      treeshake: true
-    },
+      shared: {
+        react: { singleton: true, requiredVersion: '^18.3.1' },
+        'react-dom': { singleton: true, requiredVersion: '^18.3.1' },
+        lit: { singleton: true, requiredVersion: '^3.3.1' },
+      },
+    }),
+  ],
+  build: {
     outDir: 'dist',
     emptyOutDir: true,
+    target: 'esnext',
+    minify: true,
     sourcemap: true,
-    minify: true
-  }
+  },
 });

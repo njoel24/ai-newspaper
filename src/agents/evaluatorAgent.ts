@@ -1,4 +1,4 @@
-import { getArticles, saveAnalytics } from '../data/db.js';
+import { getArticles, saveAnalytics } from '../data/db.ts';
 
 export async function runEvaluatorAgent() {
   console.log('📊 EvaluatorAgent: fetching latest articles...');

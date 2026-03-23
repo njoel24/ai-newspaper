@@ -1,13 +1,13 @@
-import { getTrends, savePlan } from '../data/db.js';
+import { getTrends, savePlan } from '../data/db.ts';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { runPrompt } from '../llm/index.js';
+import { runPrompt } from '../llm/index.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export async function runPlannerAgent(trends?: any[]) {
   console.log('🧩 PlannerAgent: collecting trends...');
-  
+
   const trendsList = trends.map((t: any) => `- ${t.topic} (${t.score.toFixed(2)})`).join('\n');
   console.log('Found trends:\n', trendsList);
 

@@ -8,6 +8,8 @@
     "types": ["vite/client"],
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "strict": false,
     "skipLibCheck": true
   },

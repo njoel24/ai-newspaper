@@ -1,7 +1,7 @@
-import { getLatestPlan, saveArticle } from '../data/db.js';
+import { getLatestPlan, saveArticle } from '../data/db.ts';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { runPrompt } from '../llm/index.js';
+import { runPrompt } from '../llm/index.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -29,7 +29,10 @@ export async function runWriterAgent() {
 
   const normalizeJson = (text: string) => {
     let cleaned = text.trim();
-    cleaned = cleaned.replace(/```[a-z]*\n?/gi, '').replace(/```/g, '').trim();
+    cleaned = cleaned
+      .replace(/```[a-z]*\n?/gi, '')
+      .replace(/```/g, '')
+      .trim();
     cleaned = cleaned.replace(/"body"\s*:\s*\{([\s\S]*?)\}\s*([},])/g, (_match, inner, tail) => {
       const bodyText = String(inner).trim();
       return `"body": ${JSON.stringify(bodyText)}${tail}`;
@@ -79,7 +82,7 @@ export async function runWriterAgent() {
     try {
       console.log(`🧠 Generating article for topic: ${t.topic}`);
 
-  const llmResponse = await runPrompt(promptFile, { topic: t.topic, angle: t.angle || '' });
+      const llmResponse = await runPrompt(promptFile, { topic: t.topic, angle: t.angle || '' });
 
       let articleJson;
       try {

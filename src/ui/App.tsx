@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import './styles.css';
 import './components/trend-ui/trend-ui';
+import { loadMicroFrontend } from './federation.ts';
 
 const App = () => {
   const [status, setStatus] = useState('Idle');
@@ -12,10 +13,9 @@ const App = () => {
   const articleRef = useRef<any>(null);
 
   useEffect(() => {
-    // Lazy load web components
     Promise.all([
-      import('../packages/article-ui/dist/article-ui.js'),
-      import('../packages/evaluator-ui/dist/evaluator-ui.js')
+      loadMicroFrontend('article_ui', 'ArticleUI'),
+      loadMicroFrontend('evaluator_ui', 'EvaluatorUI'),
     ]).then(() => {
       setComponentsLoaded(true);
     });

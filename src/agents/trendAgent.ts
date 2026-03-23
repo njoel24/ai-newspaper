@@ -1,7 +1,7 @@
-import { getTrends, saveTrends } from '../data/db.js';
+import { getTrends, saveTrends } from '../data/db.ts';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { runPrompt } from '../llm/index.js';
+import { runPrompt } from '../llm/index.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TRENDS_TTL_HOURS = Number(process.env.TRENDS_TTL_HOURS || '24');

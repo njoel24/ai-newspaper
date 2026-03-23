@@ -47,6 +47,9 @@ web_modules/
 # TypeScript cache
 *.tsbuildinfo
 
+# Module Federation temp files (build artifacts, not for publication)
+.__mf__temp/
+
 # Optional npm cache directory
 .npm
 

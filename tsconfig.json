@@ -11,7 +11,9 @@
     "outDir": "dist",
     "rootDir": "src",
     "resolveJsonModule": true,
-    "lib": ["ES2021", "DOM"]
+    "lib": ["ES2021", "DOM"],
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   },
   "include": ["src/**/*", "test/**/*"],
   "exclude": ["node_modules", "dist", "src/ui/**", "src/packages/**"]
